@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+}
+
+#slider,
+.wrap,
+.slide-content,
+.link {
+    margin: 0;    
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    height: 300px;
+    width: 600px;
+}
+
+.link {
+	margin-left: 10px;
+	height: 20px;
+    width: 550px;
+    text-align: left;
+}
+
+.wrap {
+    position: relative;
+    margin-left:10px;
+}
+
+.slide {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.slide1 {
+    background-image: url('images/image1.jpg')
+}
+
+.slide2 {
+    background-image: url('images/image2.jpg')
+}
+
+.slide3 {
+    background-image: url('images/image3.jpg')
+}
+
+.slide4 {
+    background-image: url('images/image4.jpg')
+}
+
+.slide-content {
+   	text-align: center;
+   	padding-top: 35px;
+}
+
+.slide-content span {
+    font-size: 2.5rem;
+    color: black;
+}
+
+.arrow {
+    cursor: pointer;
+    position: absolute;
+    top: 9%;
+    border-style: solid;
+}
+
+#arrow-left {
+    border-width: 20px 40px 20px 0;
+    border-color: transparent black transparent transparent;
+    left: 0;
+    margin-left: 15px;
+}
+
+#arrow-right {
+    border-width: 20px 0 20px 40px;
+    border-color: transparent transparent transparent black;
+    right: 0;
+    margin-right: 15px;
+}
+
+#textbox {
+    font-size: 1.5rem;
+    position: relative;
+    bottom: 80%;
+    background-color: transparent;
+    color: black;
+    display: flex;
+    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border: 0px;
+    height: 100px;
+    width: 500px;
+}
+
+.overlay {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.8;
+    background-color: black;
+    transition: .5s ease;
+    position: absolute;
+}
+
+.wrap:hover .overlay {
+    background-color: black;
+    opacity: 1;
+}
+
+.buttonwrap {	
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+#button {
+    font-size: 1.5rem;
+    position: relative;
+    opacity: 1;
+    display: flex;
+    height: 60px;
+    width: 500px;
+    margin-top: 10px;
+    margin-left: 55px;
+    margin-right: auto;
+    text-align: center;
+    justify-content: center;
+}

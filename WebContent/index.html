@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Filmsearch Database</title>
+</head>
+
+<body bgcolor=SeaShell>
+
+    <table border="0" cellpadding="10">
+        <tr>
+            <td>
+                <img src="images/camera.jpg" alt="Image" width=160px height=100px>
+            </td>
+            <td>
+                <h1>Willkommen zur Datenabfrage von Filmen mit Drehort in San Francisco.</h1>
+            </td>
+        </tr>
+    </table>
+
+    <p>Mit diesem Service können die Filmnamen und genauen Drehorte von Filmen aus San Francisco abgefragt werden. Durch klicken auf die folgenden Links können die Daten im JSON Format abgefragt werden, entweder alle Daten auf einmal oder mit einem Filter nach "title" und "locations".</p>
+
+	<div class="inputdatawrap">		 		
+		<form id="form1" action="" method="post">
+	    
+		<p>Geben Sie im folgenden Feld bitte die Input-URL an. Wählen Sie einen Link mit Inputdaten im JSON Format, wobei die Datenspalten "titel" und "locations" in der Unterrubrik "view" vorhanden sein sollten und in der Unterrubrik "data" die zugehörige Datentabelle:</p>		
+		<input type="textbox" class="link" name="link_box_data" value="https://data.sfgov.org/api/views/yitu-d5am/rows.json?accessType=DOWNLOAD"
+			style="color:#888;" onfocus="this.style.color = '#000';" onblur="this.style.color = '#888';"/>
+		<br>
+		<br>
+	   	<field>
+	   		<label class="question">Sie können wählen in welchem Outputformat die Daten ausgegeben werden sollen:</label><br>
+	       	<span class="input">
+				<ul><label class="answer"><input required type=radio name=outputtype value="JSON" checked="checked"> JSON</label></ul>
+	        	<ul><label class="answer"><input required type=radio name=outputtype value="html_simple"> HTML</label></ul>
+	        	<ul><label class="answer"><input required type=radio name=outputtype value="html_table"> HTML Tabelle</label></ul>
+			</span>
+		</field>
+	
+		<p>Sie können wählen, ob Sie alle Daten abfragen möchten oder die Felder "titel" oder "locations" filtern möchten (durch Klicken ins Bild können sie auch den Filtertext eingeben).</p>			 		 
+	    <div class="wrap">
+	        <div class="overlay">
+	            
+	            <div id="slider">
+	                <div class="slide slide1">
+	                    <div class="slide-content">
+	                        <span>all data</span>
+	                    </div>
+	                </div>
+	                <div class="slide slide2">
+	                    <div class="slide-content">
+	                        <span>filter: title</span>
+	                    </div>
+	                </div>
+	                <div class="slide slide3">
+	                    <div class="slide-content">
+	                        <span>filter: location</span>
+	                    </div>
+	                </div>
+	                <div class="slide slide4">
+	                    <div class="slide-content">
+	                        <span>filter: title&location</span>
+	                    </div>
+	                </div>
+	            </div>
+	            <div id="arrow-left" class="arrow"></div>
+	            <div id="arrow-right" class="arrow"></div>
+	            <input id="textbox" name="t1" type="text" style="color:rgb(73, 73, 73)" onClick="ChangeBlack(this.id)" onblur="ChangeGray(this.id)">
+	        </div>
+	    </div>
+	
+	    <script>
+	        let sliderImages = document.querySelectorAll('.slide'),
+	            arrowLeft = document.querySelector('#arrow-left'),
+	            arrowRight = document.querySelector('#arrow-right'),
+	            textBox = document.querySelector('#textbox'),
+	            current = 0;
+	        // Clear all images
+	        function reset() {
+	            for (let i = 0; i < sliderImages.length; i++) {
+	                sliderImages[i].style.display = 'none';
+	            }
+	        }
+	        // Init slider
+	        function startSlide() {
+	            reset();
+	            sliderImages[0].style.display = 'block';
+	        }
+	        startSlide();
+	        // Show prev
+	        function slideLeft() {
+	            reset();
+	            sliderImages[current - 1].style.display = 'block';
+	            current--;
+	            textbox.value = current == 0 ? " " : current == 1 ? "e.g. title=Blue Jasmin" : current == 2 ? "e.g. locations=Geary Ave" : "e.g. title=Blue Jasmin&locations=Geary Ave";	            
+	        }
+	        // Show next
+	        function slideRight() {
+	            reset();
+	            sliderImages[current + 1].style.display = 'block';
+	            current++;
+	            textbox.value = current == 0 ? " " : current == 1 ? "e.g. title=Blue Jasmin" : current == 2 ? "e.g. locations=Geary Ave" : "e.g. title=Blue Jasmin&locations=Geary Ave";
+	        }
+	        // Left arrow click
+	        arrowLeft.addEventListener('click', function() {
+	            if (current == 0) {
+	                current = sliderImages.length;
+	            }
+	            slideLeft();
+	        });
+	        // Right arrow click
+	        arrowRight.addEventListener('click', function() {
+	            if (current == sliderImages.length - 1) {
+	                current = -1;
+	            }
+	            slideRight();
+	        });
+	
+	        startSlide();
+	
+	        function ChangeBlack(str) {
+	            document.getElementById(str).style.color = "black";
+	        }
+	
+	        function ChangeGray(str) {
+	            document.getElementById(str).style.color = "gray";
+	        }
+	    </script>
+	 	<br>
+	 	<br>	 	
+	  	<div class="buttonwrap">	
+	        <button id="button" name="b1" type="button" onclick="myFunction('MainPageServlet');">Abfrage ausführen</button>	 
+	        <script>
+	 			function myFunction(str) {
+	 				form1 = document.getElementById("form1");
+	 				if (textBox.value.length>0)
+ 						form1.action = str.concat("?").concat(textBox.value);
+	 				else
+	 					form1.action = str;
+ 					form1.submit();
+	 			}
+	  		</script>	   	          			     
+	    </div>
+	</form>		  	
+	</div>  		
+</body>
+
+</html>
